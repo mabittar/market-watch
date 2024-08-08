@@ -1,8 +1,7 @@
 from fastapi import APIRouter, FastAPI
-from fastapi import APIRouter
 
-from src.settings import AppSettings, settings
 from src.presentation import router
+from src.settings import AppSettings, settings
 
 
 class App:
