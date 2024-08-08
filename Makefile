@@ -25,7 +25,6 @@ COLOR_RED = \033[31m
 COLOR_GREEN = \033[32m
 COLOR_RESET = \033[0m
 
-
 ## Pythonic variables
 # It's a good idea to avoid hardcoding tool executables in a Makefile.
 # Setting them with ?= enables override, e.g. `make deps PYENV=path/to/dev/pyenv`
@@ -38,7 +37,7 @@ TESTS_BASE_DIR := tests
 TEST_COV_THRESHOLD := 60
 INSTALL_STAMP := $(VENV)/.install.stamp
 CURRENT_PYTHON ?= $(VENV)/bin/python
-RUFF ?= $(CURRENT_PYTHON) run ruff
+RUFF ?= ruff
 BLACK ?= $(VENV)/bin/black
 PYTEST ?= $(CURRENT_PYTHON) -m pytest
 PIP := $(VENV)/bin/pip
@@ -202,7 +201,7 @@ check: check-py-ruff-format check-py-ruff-lint check-precommit ## Run all checks
 
 .PHONY: check-py-ruff-lint
 check-py-ruff-lint: ## Run ruff linter
-	$(RUFF) $(RUFF_OPTS) $(MODULE_BASE_DIR) $(TESTS_BASE_DIR) || \
+	$(RUFF) check $(MODULE_BASE_DIR) $(TESTS_BASE_DIR) || \
 		(echo "$(COLOR_RED)Run '$(notdir $(MAKE)) check-py-ruff-fix' to fix some of these automatically if [*] appears above, then run '$(notdir $(MAKE)) $(MAKECMDGOALS)' again." && false)
 
 .PHONY: check-py-ruff-fix
@@ -232,3 +231,13 @@ format-py: ## Runs formatter, makes changes where necessary
 clean: ## Clean artifacts from build and dist directories, virtual env and others cache files
 	rm -rf $(BUILD_DIR) $(VENV)
 	find -iname "*.pyc" -delete
+
+##@ Docker
+
+.PHONY: docker-build
+docker-build: ## Build Docker image
+	docker build -t myapp .
+
+.PHONY: docker-run
+docker-run: ## Run Docker container with environment variables from .env file
+	docker run -p 8000:8000 myapp
