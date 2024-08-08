@@ -1,10 +1,10 @@
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
-from fastapi import FastAPI
 import pytest
+from fastapi import FastAPI
 from httpx import AsyncClient
 
-from src.main import initialize_application, app
+from src.main import initialize_application
 
 
 @pytest.fixture(name="test_app")

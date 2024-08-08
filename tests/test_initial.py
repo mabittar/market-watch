@@ -1,2 +1,3 @@
 def test_use():
-    assert 1 == 1
+    expected_value = 1
+    assert expected_value == 1

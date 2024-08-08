@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Path, status
 from fastapi.responses import JSONResponse
 
+from ..models.schema.stock import Stock
+
 router = APIRouter(tags=["Stock"])
 
 
@@ -12,5 +14,5 @@ router = APIRouter(tags=["Stock"])
 )
 async def check_health(
     *, stock_symbol: str = Path(description="Stock Symbol")
-) -> JSONResponse:
-    return JSONResponse(content={"stock_symbol": stock_symbol})
+) -> Stock:
+    return Stock(stock_symbol=stock_symbol)
