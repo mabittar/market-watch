@@ -13,18 +13,18 @@ class AppEnvironment(str, Enum):
 
 class AppSettings(BaseSettings):
     TITLE: str = "Market Watch"
-    VERSION: str = environ["APP_VERSION"]
+    VERSION: str = environ.get("APP_VERSION", "0.0.1")
     TIMEZONE: str = "UTC"
     DESCRIPTION: str = "Retrieve data from Market Sources"
     IS_DEBUG: bool = False
-    DOCS_URL: str = environ["DOCS_URL"]
-    OPENAPI_URL: str = environ["OPENAPI_URL"]
-    REDOC_URL: str = environ["REDOC_URL"]
+    DOCS_URL: str = environ.get("DOCS_URL", "/docs")
+    OPENAPI_URL: str = environ.get("OPENAPI_URL", "/openapi.json")
+    REDOC_URL: str = environ.get("REDOC_URL", "/redoc")
     OPENAPI_PREFIX: str = ""
 
-    HOST: str = environ["SERVER_HOST"]
-    PORT: int = int(environ["SERVER_PORT"])
-    WORKERS: int = int(environ["SERVER_WORKERS"])
+    HOST: str = environ.get("SERVER_HOST", "localhost")
+    PORT: int = int(environ.get("SERVER_PORT", 8000))
+    WORKERS: int = int(environ.get("SERVER_WORKERS", 1))
 
     model_config = SettingsConfigDict(
         env_file=f"{Path().resolve()}/.env",
@@ -73,7 +73,7 @@ class FactoryAppSettings:
 
 @lru_cache()
 def get_settings() -> AppSettings:
-    return FactoryAppSettings(environment=environ["APP_ENV"])()
+    return FactoryAppSettings(environment=environ.get("APP_ENV", "LOCAL"))()
 
 
 settings = get_settings()

@@ -5,7 +5,7 @@ router = APIRouter(tags=["Health Checker"])
 
 
 @router.get(
-    path="/",
+    path="/health",
     response_class=JSONResponse,
     name="health-check",
     status_code=status.HTTP_200_OK,
