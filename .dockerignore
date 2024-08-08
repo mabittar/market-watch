@@ -10,6 +10,5 @@ coverage/**
 Dockerfile.dev
 Dockerfile.prod
 docker-compose.yaml
-requirements.txt
 .egg*
 tests/
