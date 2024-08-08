@@ -1,3 +1,5 @@
+-r requirements-base.txt
+colorama
 fastapi
 uvicorn
 pydantic
