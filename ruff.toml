@@ -1,38 +1,41 @@
-# By default, enable all the lint rules.
-# Add to the ignore list below if you don't want some rules.
-# If you need some ignores for certain modules, see tool.ruff.lint.per-file-ignores below.
-# For individual ignore cases, prefer inline `# noqa`s within the code.
-   
+# Configuração padrão para habilitar todas as regras de lint.
+# Adicione à lista de ignorados abaixo se não quiser algumas regras.
+# Para ignorar certas regras em módulos específicos, veja `tool.ruff.lint.per-file-ignores` abaixo.
+# Para casos individuais de ignorar, prefira inline `# noqa`s dentro do código.
+
+# Versão alvo do Python
 target-version = "py310"
+line-length = 90
+indent-width = 4
 
-[lint]
-# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
-# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
-# McCabe complexity (`C901`) by default.extend-select = [
-  "UP",  # pyupgrade
-  "D",   # pydocstyle
-]
 
-include = ["pyproject.toml", "src/**/*.py", "scripts/**/*.py", "tests/**/*.py"]
-
-select = [
+# Habilitar Pyflakes (`F`) e um subconjunto dos códigos pycodestyle (`E`) por padrão.
+# Ao contrário do Flake8, Ruff não habilita avisos pycodestyle (`W`) ou
+# complexidade de McCabe (`C901`) por padrão.
+lint.select = [
     "F",  # Pyflakes
     "E",  # Pycodestyle
     "W",  # Pycodestyle
-    "UP",  # pyupgrade
+    "UP", # pyupgrade
     "I",  # isort
     "PL", # Pylint
 ]
 
-# Allow fix for all enabled rules (when `--fix`) is provided.
-fixable = ["ALL"]
-unfixable = []
+# Estender a seleção com regras adicionais
+lint.extend-select = [
+    "UP",  # pyupgrade
+    "D",   # pydocstyle
+]
 
-# Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+# Permitir correção para todas as regras habilitadas (quando `--fix` for fornecido).
+lint.fixable = ["ALL"]
+lint.unfixable = []
 
-# Exclude a variety of commonly ignored directories.
-exclude = [
+# Permitir variáveis não utilizadas quando prefixadas com underscore.
+lint.dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Excluir uma variedade de diretórios comumente ignorados.
+lint.exclude = [
     ".bzr",
     ".direnv",
     ".eggs",
@@ -65,52 +68,59 @@ exclude = [
     "**/__init__.py",
 ]
 
-ignore = [
-    "ANN",      # Type hints related, let mypy handle these.
-    "COM812",   # "Trailing comma missing". If black is happy, I'm happy.
-    "D",        # Docstrings related
-    "E501",     # "Line too long". If black is happy, I'm happy.
-    "EM101",    # "Exception must not use a string literal, assign to variable first"
-    "EM102",    # "Exception must not use an f-string literal, assign to variable first"
-    "PTH",      # User Pathlib stuff over os.*. Should migrate to Pathlib at some point.
-    "RET504",   # "Unnecessary variable assignment before `return` statement"
-    "S101",     # "Use of `assert` detected"
-    "SIM108",   # "Use ternary operator ...". Ternary is harmful for readability in some cases.
-    "TRY003",   # "Avoid specifying long messages outside the exception class"
-    "FA100", 	# "Missing `from __future__ import annotations` ..." pytest-split supports a range of Python versions
-    ]
-    
+# Regras a serem ignoradas
+lint.ignore = [
+    "ANN",      # Relacionadas a dicas de tipo, deixo o mypy lidar com isso.
+    "COM812",   # "Trailing comma missing". Se o black está feliz, estou feliz.
+    "D",        # Relacionadas a docstrings
+    "E501",     # "Linha muito longa". Se o black está feliz, estou feliz.
+    "EM101",    # "Exceção não deve usar literal de string, atribua a uma variável primeiro"
+    "EM102",    # "Exceção não deve usar literal de f-string, atribua a uma variável primeiro"
+    "PTH",      # Use Pathlib em vez de os.*. Deve migrar para Pathlib em algum momento.
+    "RET504",   # "Atribuição de variável desnecessária antes da instrução `return`"
+    "S101",     # "Uso de `assert` detectado"
+    "SIM108",   # "Use operador ternário ...". Ternário é prejudicial à legibilidade em alguns casos.
+    "TRY003",   # "Evite especificar mensagens longas fora da classe de exceção"
+    "FA100",    # "Faltando `from __future__ import annotations` ..." pytest-split suporta uma gama de versões do Python
+]
+
+# Máximo de argumentos permitidos
+[pylint]
 max-args = 4
 
+# Configurações específicas para pydocstyle
 [lint.pydocstyle]
 convention = "google"
 
-# Same as Black.
-line-length = 90
-indent-width = 4
+# Mesma configuração que o Black.
+# line-length = 90
+# indent-width = 4
 
+# Configurações de formatação
 [format]
-# Like Black, use double quotes for strings.
+# Como o Black, use aspas duplas para strings.
 quote-style = "double"
 
-# Like Black, indent with spaces, rather than tabs.
+# Como o Black, indente com espaços, em vez de tabs.
 indent-style = "space"
 
-# Like Black, respect magic trailing commas.
+# Como o Black, respeite as vírgulas mágicas de final de linha.
 skip-magic-trailing-comma = false
 
-# Like Black, automatically detect the appropriate line ending.
+# Como o Black, detecte automaticamente a terminação de linha apropriada.
 line-ending = "auto"
 
-# Ignore `E402` (import violations) in all `__init__.py` files, and in select subdirectories.
+# Ignorar `E402` (violações de importação) em todos os arquivos `__init__.py` e em subdiretórios selecionados.
 [lint.per-file-ignores]
 "__init__.py" = ["E402"]
 "**/{tests,docs,tools}/*" = ["E402"]
 
-[tool.ruff.lint.mccabe]
+# Configurações para McCabe
+[lint.mccabe]
 max-complexity = 8
 
-[tool.ruff.lint.pep8-naming]
+# Configurações para pep8-naming
+[lint.pep8-naming]
 classmethod-decorators = [
     "classmethod",
     "pydantic.validator",
