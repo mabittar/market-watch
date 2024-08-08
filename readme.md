@@ -11,7 +11,7 @@
 - [x] Install Framework
 - [x] Start application
 - [x] Create dockerfile for application, should serve on port 8000
-- [ ] Create new endpoint to retrieve data `[GET] /stock/{stock_symbol}:`
+- [x] Create new endpoint to retrieve data `[GET] /stock/{stock_symbol}:`
 - [ ] Create infra for Polygon.io
 - [ ] Retreive data from Polygon.io
 - [ ] Parse data and make response
