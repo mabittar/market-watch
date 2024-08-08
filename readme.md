@@ -7,9 +7,9 @@
 
 ## TODO:
 
-- [ ] Create Project
-- [ ] Install Framework
-- [ ] Start application
+- [x] Create Project
+- [x] Install Framework
+- [x] Start application
 - [ ] Create dockerfile for application, should serve on port 8000
 - [ ] Create new endpoint to retrieve data `[GET] /stock/{stock_symbol}:`
 - [ ] Create infra for Polygon.io
