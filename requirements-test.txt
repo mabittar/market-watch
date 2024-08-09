@@ -1,5 +1,6 @@
 -r requirements.txt
 
 greenlet
-pytest-cov
 pytest
+pytest-cov
+pytest-mock
