@@ -26,6 +26,9 @@ class AppSettings(BaseSettings):
     PORT: int = int(environ.get("SERVER_PORT", 8000))
     WORKERS: int = int(environ.get("SERVER_WORKERS", 1))
 
+    POLYGON_API_KEY: str = environ.get("POLYGON_API_KEY", "")
+    POLYGON_API_TIMEOUT: int = int(environ.get("POLYGON_API_TIMEOUT", 500))
+
     model_config = SettingsConfigDict(
         env_file=f"{Path().resolve()}/.env",
         case_sensitive=True,
@@ -71,7 +74,7 @@ class FactoryAppSettings:
         return AppLocalSettings()
 
 
-@lru_cache()
+@lru_cache
 def get_settings() -> AppSettings:
     return FactoryAppSettings(environment=environ.get("APP_ENV", "LOCAL"))()
 

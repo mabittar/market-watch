@@ -11,18 +11,18 @@
 - [x] Install Framework
 - [x] Start application
 - [x] Create dockerfile for application, should serve on port 8000
-- [ ] Create new endpoint to retrieve data `[GET] /stock/{stock_symbol}:`
-- [ ] Create infra for Polygon.io
-- [ ] Retreive data from Polygon.io
-- [ ] Parse data and make response
+- [x] Create new endpoint to retrieve data `[GET] /stock/{stock_symbol}:`
+- [x] Create infra for Polygon.io
+- [x] Retreive data from Polygon.io
+- [x] Parse data and make response
+- [ ] Create infra for MarketWatch
+- [ ] Retrieve Performance and Competitors data from MarketWatch
+- [ ] Parse data and compose response
 - [ ] Create docker compose for database (PostgresDB)
 - [ ] Install DB deps
 - [ ] Create DB connection
 - [ ] Create DB entities for stock data
 - [ ] Request from endpoint, persist data and make responses
-- [ ] Create infra for MarketWatch
-- [ ] Retrieve Performance and Competitors data from MarketWatch
-- [ ] Parse data and compose response
 - [ ] Create new endpoint to register operations `[POST] /stock/{stock_symbol}`
 - [ ] Create docker compose for database (PostgresDB)
 - [ ] Install DB deps

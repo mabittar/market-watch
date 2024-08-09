@@ -133,3 +133,6 @@ cython_debug/
 # Coding Environment
 .idea/
 .vscode/
+
+# Ruff and lint
+.ruff_cache/
