@@ -1,4 +1,8 @@
+from typing import Any
+
 import httpx
+
+from ...exceptions import ConnectorError
 
 
 class BaseAsyncConnector:
@@ -6,14 +10,8 @@ class BaseAsyncConnector:
         return httpx.URL(url)
 
     async def request_async(  # noqa
-        self,
-        url=httpx.URL(),
-        method=None,
-        headers=None,
-        payload=None,
-        timeout=None,
-        **kwargs
-    ) -> httpx.Response:  # noqa
+        self, url=httpx.URL(), method=None, headers=None, timeout=None, **kwargs
+    ) -> Any:  # noqa
         async with httpx.AsyncClient() as client:
             if method == "GET":
                 resp = await client.get(
@@ -21,39 +19,11 @@ class BaseAsyncConnector:
                     headers=headers,
                     timeout=timeout,
                 )
-            elif method == "POST":
-                resp = await client.post(
-                    url,
-                    headers=headers,
-                    json=payload,
-                    timeout=timeout,
-                )
-            elif method == "PUT":
-                resp = await client.put(
-                    url,
-                    headers=headers,
-                    json=payload,
-                    timeout=timeout,
-                )
-            elif method == "PATCH":
-                resp = await client.patch(
-                    url,
-                    headers=headers,
-                    json=payload,
-                    timeout=timeout,
-                )
-            elif method == "OPTIONS":
-                resp = await client.options(
-                    url,
-                    headers=headers,
-                    timeout=timeout,
-                )
-            elif method == "DELETE":
-                resp = await client.delete(
-                    url,
-                    headers=headers,
-                    timeout=timeout,
-                )
+
+                if resp.status_code != 200:  # noqa
+                    raise ConnectorError(
+                        error_msg=resp.text, status_code=resp.status_code
+                    )
             else:
                 raise Exception("Undefined request method")
-            return resp
+        return resp.json()
