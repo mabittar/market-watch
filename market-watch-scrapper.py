@@ -1,16 +1,15 @@
 # pip install selenium selenium-wire webdriver-manager fake-useragent
 
 import time
-from selenium import webdriver
-from seleniumwire import webdriver as wiredriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
 
 from fake_useragent import UserAgent
-
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from seleniumwire import webdriver as wiredriver
+from webdriver_manager.chrome import ChromeDriverManager
 
 service = Service(ChromeDriverManager().install())
 options = webdriver.ChromeOptions()
@@ -63,7 +62,7 @@ def get_watch(proxies):
         }
         driver = wiredriver.Chrome(
             service=service,
-            # seleniumwire_options=seleniumwire_options,
+            seleniumwire_options=seleniumwire_options,
             options=options,
         )
 

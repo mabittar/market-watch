@@ -1,12 +1,13 @@
 # tests/test_stock_application.py
 import pytest
+
 from src.application.stock_application import StockApplication
 from src.infra.connectors.base_async_connector import BaseAsyncConnector
 
 
 @pytest.mark.anyio
 async def test_stock_application_execute(mocker):
-    expected_response = {
+    expected_polygon_response = {
         "status": "OK",
         "from": "2023-08-08",
         "symbol": "AAPL",
@@ -20,12 +21,12 @@ async def test_stock_application_execute(mocker):
     }
 
     mocker.patch.object(
-        BaseAsyncConnector, "request_async", return_value=expected_response
+        BaseAsyncConnector, "request_async", return_value=expected_polygon_response
     )
 
     stock_application = StockApplication()
     result = await stock_application.execute("AAPL")
 
     assert result.company_code == "AAPL"
-    assert result.stock_values.open == 179.69
-    assert result.stock_values.close == 179.8
+    assert result.stock_values.open == expected_polygon_response["open"]
+    assert result.stock_values.close == expected_polygon_response["close"]

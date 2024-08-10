@@ -1,4 +1,5 @@
 from src.application.base_application import BaseApplicatoin
+
 from ..infra.connectors.polygon import PolygonConnect
 from ..models.schema.stock import StockResponse, stock_adapter
 
