@@ -1,7 +1,7 @@
 # tests/test_stock_application.py
 import pytest
 from src.application.stock_application import StockApplication
-from src.infra.connectors.polygon import PolygonConnect
+from src.infra.connectors.base_async_connector import BaseAsyncConnector
 
 
 @pytest.mark.anyio
@@ -20,7 +20,7 @@ async def test_stock_application_execute(mocker):
     }
 
     mocker.patch.object(
-        PolygonConnect, "get_open_close", return_value=expected_response
+        BaseAsyncConnector, "request_async", return_value=expected_response
     )
 
     stock_application = StockApplication()
