@@ -1,9 +1,10 @@
+from src.application.base_application import BaseApplicatoin
 from ..infra.connectors.polygon import PolygonConnect
-from ..models.schema.stock import Stock, stock_adapter
+from ..models.schema.stock import StockResponse, stock_adapter
 
 
-class StockApplication:
-    async def execute(self, stock_symbol: str) -> Stock:
+class StockApplication(BaseApplicatoin):
+    async def execute(self, stock_symbol: str) -> StockResponse:
 
         test_date = "2023-08-08"
         try:
