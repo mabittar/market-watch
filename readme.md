@@ -4,6 +4,7 @@
 
 - Stock_values sould be persisted and retrieved only for request_data dates? Or must be filled for all dates?
 - What's status and purchased_status for?
+- MarketWatch has robot restriction and IP blocks. There is another source for desired information or interface to retreive data?
 
 ## TODO:
 
@@ -15,20 +16,15 @@
 - [x] Create infra for Polygon.io
 - [x] Retreive data from Polygon.io
 - [x] Parse data and make response
+- [x] Create new endpoint to register operations `[POST] /stock/{stock_symbol}`
+- [x] Parse data and compose response
+- [ ] Create docker compose for database (PostgresDB)
+- [ ] Install DB deps
+- [ ] Create DB connection
+- [ ] Create DB entities for stock data
 - [ ] Create infra for MarketWatch
-- [ ] Retrieve Performance and Competitors data from MarketWatch
-- [ ] Parse data and compose response
-- [ ] Create docker compose for database (PostgresDB)
-- [ ] Install DB deps
-- [ ] Create DB connection
-- [ ] Create DB entities for stock data
-- [ ] Request from endpoint, persist data and make responses
-- [ ] Create new endpoint to register operations `[POST] /stock/{stock_symbol}`
-- [ ] Create docker compose for database (PostgresDB)
-- [ ] Install DB deps
-- [ ] Create DB connection
-- [ ] Create DB entities for stock data
 - [ ] Persist data for stocks and their purchased amounts
+- [ ] Retrieve Performance and Competitors data from MarketWatch
 - [ ] Compose response and fill all Expected Json Response
 - [ ] Improve docker-compose with cache
 - [ ] Implement caching per stock mechanism on the GET
