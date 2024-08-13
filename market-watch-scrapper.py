@@ -62,7 +62,7 @@ def get_watch(proxies):
         }
         driver = wiredriver.Chrome(
             service=service,
-            seleniumwire_options=seleniumwire_options,
+            # seleniumwire_options=seleniumwire_options,
             options=options,
         )
 
