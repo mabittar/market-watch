@@ -1,6 +1,11 @@
 -r requirements-base.txt
+asyncio
+asyncpg
 colorama
 fastapi
 uvicorn
 pydantic
 pydantic-settings
+psycopg[binary]
+SQLAlchemy
+uuid7
