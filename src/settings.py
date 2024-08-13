@@ -3,6 +3,11 @@ from functools import lru_cache
 from os import environ
 from pathlib import Path
 
+from pydantic import (
+    PostgresDsn,
+    computed_field,
+)
+from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -12,6 +17,13 @@ class AppEnvironment(str, Enum):
 
 
 class AppSettings(BaseSettings):
+
+    model_config = SettingsConfigDict(
+        env_file=f"{Path().resolve()}/.env",
+        case_sensitive=True,
+        validate_assignment=True,
+        extra="allow",
+    )
     TITLE: str = "Market Watch"
     VERSION: str = environ.get("APP_VERSION", "0.0.1")
     TIMEZONE: str = "UTC"
@@ -29,14 +41,27 @@ class AppSettings(BaseSettings):
     POLYGON_API_KEY: str = environ.get("POLYGON_API_KEY", "")
     POLYGON_API_TIMEOUT: int = int(environ.get("POLYGON_API_TIMEOUT", 500))
 
-    model_config = SettingsConfigDict(
-        env_file=f"{Path().resolve()}/.env",
-        case_sensitive=True,
-        validate_assignment=True,
-        extra="allow",
-    )
+    POSTGRES_SERVER: str = str(environ.get("POSTGRES_SERVER"))
+    POSTGRES_PORT: int = int(environ.get("POSTGRES_PORT", 5432))
+    POSTGRES_POOL_SIZE: int = int(environ.get("POSTGRES_POOL_SIZE", 5))
+    POSTGRES_USER: str = str(environ.get("POSTGRES_USER"))
+    POSTGRES_PASSWORD: str = str(environ.get("POSTGRES_PASSWORD"))
+    POSTGRES_DB: str = str(environ.get("POSTGRES_DB", "stock"))
+    POSTGRES_ECHO: bool = bool(environ.get("POSTGRES_ECHO", False))
 
+    @computed_field  # type: ignore[prop-decorator]
     @property
+    def DATABASE_URI(self) -> PostgresDsn:
+        return MultiHostUrl.build(
+            scheme="postgresql+psycopg",
+            username=self.POSTGRES_USER,
+            password=self.POSTGRES_PASSWORD,
+            host=self.POSTGRES_SERVER,
+            port=self.POSTGRES_PORT,
+            path=self.POSTGRES_DB,
+        )
+
+    @property  # type: ignore[prop-decorator]
     def set_app_attributes(self) -> dict[str, str | bool | None]:
         """
         Set all `FastAPI` class' attributes with the custom values defined in `BackendBaseSettings`.
@@ -56,7 +81,6 @@ class AppSettings(BaseSettings):
 class AppLocalSettings(AppSettings):
     ENVIRONMENT: AppEnvironment = AppEnvironment.LOCAL
     DESCRIPTION: str = f"Application ({ENVIRONMENT})."
-    IS_DEBUG: bool = True
 
 
 class AppProductionSettings(AppSettings):
