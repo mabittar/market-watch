@@ -1,4 +1,3 @@
-
 from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -71,6 +70,7 @@ class StockRepository:
         low: float,
         close: float,
         date_str: str,
+        **kwargs,
     ) -> None:
         query = select(StockTimeSeries).where(
             StockTimeSeries.stock_id == stock_id, StockTimeSeries.date == date_str
@@ -112,7 +112,12 @@ class StockRepository:
         ]
 
     async def add_market_cap(
-        self, stock_id: str, currency: str, value: float, date_str: str
+        self,
+        stock_id: str,
+        currency: str,
+        value: float,
+        date_str: str,
+        **kwargs,
     ) -> None:
         query = select(MarketCap).where(
             MarketCap.stock_id == stock_id, MarketCap.date == date_str
@@ -151,6 +156,7 @@ class StockRepository:
         year_to_date: float,
         one_year: float,
         date_str: str,
+        **kwargs,
     ) -> None:
 
         query = select(StockPerformance).where(
@@ -248,7 +254,12 @@ class StockRepository:
             purchased_status=operation.purchased_status,
         )
 
-    async def add_competitor(self, stock_id: str, name: str) -> None:
+    async def add_competitor(
+        self,
+        stock_id: str,
+        name: str,
+        **kwargs,
+    ) -> None:
         query = select(Competitor).where(
             Competitor.stock_id == stock_id, Competitor.name == name
         )

@@ -48,13 +48,13 @@ services:
     depends_on:
       - db
     environment:
-      - APP_ENV="LOCAL"
-      - APP_VERSION=$"0.1.0"
-      - ASGI_LOGGER="uvicorn.asgi"
-      - DOCS_URL="/docs"
-      - OPENAPI_URL="/openapi.json"
-      - REDOC_URL="/redoc"
-      - SERVER_HOST="localhost"
+      - APP_ENV=LOCAL
+      - APP_VERSION=0.1.0
+      - ASGI_LOGGER=uvicorn.asgi
+      - DOCS_URL=/docs
+      - OPENAPI_URL=/openapi.json
+      - REDOC_URL=/redoc
+      - SERVER_HOST=localhost
       - SERVER_PORT=8000
       - SERVER_WORKERS=4
       - POLYGON_API_KEY=${POLYGON_API_KEY?Variable not set}

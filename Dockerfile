@@ -1,5 +1,5 @@
 # temp stage
-FROM python:3.10-slim AS builder
+FROM python:3.10-slim-buster AS builder
 
 # Ajuste do comportamento do Python
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -9,12 +9,13 @@ WORKDIR /app
 
 # Instalando dependencias
 RUN apt-get update && \
-    apt-get install gcc postgresql-client -y && \
+    apt-get install gcc libpq-dev postgresql-client -y && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Preparando o ambiente
+COPY requirements-base.txt /app
 COPY requirements.txt /app
 
 # Instale as dependências do aplicativo
@@ -23,7 +24,7 @@ RUN python -m pip install --upgrade setuptools wheel
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
 # final stage
-FROM python:3.10-slim
+FROM python:3.10-slim-buster
 EXPOSE 8000
 WORKDIR /app
 

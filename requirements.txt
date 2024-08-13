@@ -3,9 +3,13 @@ asyncio
 asyncpg
 colorama
 fastapi
+httpx
 uvicorn
 pydantic
 pydantic-settings
-psycopg[binary]
+psycopg
+psycopg-binary
+selenium
+selenium-wire
 SQLAlchemy
 uuid7
