@@ -6,6 +6,36 @@
 - What's status and purchased_status for?
 - MarketWatch has robot restriction and IP blocks. There is another source for desired information or interface to retreive data?
 
+## How to use
+
+### Block and ps.
+
+I was blocked several times while requesting data from MarketWatch, so I created a constant data for AAPL as example!
+
+### Instructions
+
+Ensure you have docker and docker-compose installed before
+
+```shell
+docker-compose build
+docker-compose up -d
+```
+
+open your web browser and set address to: `http://localhost:8080/`.
+
+login change driver to postgres, fill user: admin, pass: changethis, db: stock
+
+navigate to SQL command on left menu, and copy all content from the file create_tables.sql, to create all tables.
+
+on a new tab in your web browser set address to: `http://localhost:8000/docs`to access API documentation
+
+## Futher improvement
+
+- Change MarketWatch source data
+- Add redis or another cache layer
+- Rename applications and split resposabilities to usecases
+- Improve tests
+
 ## TODO:
 
 - [x] Create Project
@@ -26,7 +56,7 @@
 - [x] Persist data for stocks and their purchased amounts
 - [x] Retrieve Performance and Competitors data from MarketWatch
 - [x] Compose response and fill all Expected Json Response
-- [ ] Implement logs for application
+- [x] Implement logs for application
 - [ ] Improve docker-compose with cache
 - [ ] Implement caching per stock mechanism on the GET
 
