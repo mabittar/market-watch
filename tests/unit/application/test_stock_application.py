@@ -1,7 +1,7 @@
 # tests/test_stock_application.py
 import pytest
 
-from src.application.stock_application import StockApplication
+from src.application.stock_application import GetStockOperationApplication
 from src.infra.connectors.base_async_connector import BaseAsyncConnector
 
 
@@ -24,7 +24,7 @@ async def test_stock_application_execute(mocker):
         BaseAsyncConnector, "request_async", return_value=expected_polygon_response
     )
 
-    stock_application = StockApplication()
+    stock_application = GetStockOperationApplication()
     result = await stock_application.execute("AAPL")
 
     assert result.company_code == "AAPL"
