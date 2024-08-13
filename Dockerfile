@@ -9,7 +9,7 @@ WORKDIR /app
 
 # Instalando dependencias
 RUN apt-get update && \
-    apt-get install gcc -y && \
+    apt-get install gcc postgresql-client -y && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -31,6 +31,9 @@ COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt /app
 
 RUN pip install --no-cache /wheels/*
+
+ENV PYTHONPATH=/app
+
 COPY src /app/src/
 
 # Crie um usuário não privilegiado e defina-o para executar a app

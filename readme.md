@@ -18,18 +18,17 @@
 - [x] Parse data and make response
 - [x] Create new endpoint to register operations `[POST] /stock/{stock_symbol}`
 - [x] Parse data and compose response
-- [ ] Create docker compose for database (PostgresDB)
-- [ ] Install DB deps
-- [ ] Create DB connection
-- [ ] Create DB entities for stock data
-- [ ] Create infra for MarketWatch
-- [ ] Persist data for stocks and their purchased amounts
-- [ ] Retrieve Performance and Competitors data from MarketWatch
-- [ ] Compose response and fill all Expected Json Response
+- [x] Create docker compose for database (PostgresDB)
+- [x] Install DB deps
+- [x] Create DB connection
+- [x] Create DB entities for stock data
+- [x] Create infra for MarketWatch
+- [x] Persist data for stocks and their purchased amounts
+- [x] Retrieve Performance and Competitors data from MarketWatch
+- [x] Compose response and fill all Expected Json Response
+- [ ] Implement logs for application
 - [ ] Improve docker-compose with cache
 - [ ] Implement caching per stock mechanism on the GET
-- [ ] Implement logs for application
-
 
 ## Domain
 
@@ -38,16 +37,17 @@
 ### Stock-timeseries
 
 - stock_id: String
-- date: unix timestamp
 - open: Float
 - high: Float
 - low: Float
 - close: Float
+- date: unix timestamp
 
 ### Market_cap
 
 - Currency: String
 - Value: Float
+- date: unix timestamp
 
 ### Stock-Operations
 
@@ -55,6 +55,7 @@
 - operation_date: Datetime
 - purchased_amount: Integer
 - purchased_status: String
+- date: unix timestamp
 
 ### Stock-performance
 
@@ -63,19 +64,21 @@
 - three_months: Float
 - year_to_date: Float
 - one_year: Float
+- date: unix timestamp
 
 ### Stock-Domain
 
 - stock_id: String
 - company_code: String
 - company_name: String
+- request_data: Date (YYYY-MM-DD)
 - Stock_values: stock-timeseries[]
-- performance_data: Stock-performance[]
-- market_cap: Market_cap
+- performance_data: Stock-performance for request_data
+- market_cap: Market_cap for request_data
 
 ## Expected Json Response
 
-- Status: String
+- status: String
 - purchased_amount: Integer
 - purchased_status: String
 - request_data: Date (YYYY-MM-DD)
